@@ -11,7 +11,7 @@
 7. Salma Essam Ismail 
 8. Basmala Mahmoud 
 9. Rania Ali 
-10. shahd Waleed Bayoumy 
+10. Shahd Waleed Bayoumy 
 
 ### How to run:
 1. Open Terminal in this folder.
