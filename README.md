@@ -5,7 +5,7 @@
 1. Mariam Khaled
 2. Mariam Hafez Saed
 3. Sondos Yasser Mohammed
-4. Soheir Mohammed Salah
+4. Sohier Mohammed Salah
 5. Mariam Farag Mohammed 
 6. Asmaa Abdallah Mosa 
 7. Salma Essam Ismail 
