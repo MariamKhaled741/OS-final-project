@@ -1,2 +1,5 @@
 all:
-	gcc "project files/src/myShell.c" -o myShell
+	gcc myShell.c -o myShell
+
+clean:
+	rm -f myShell
