@@ -91,3 +91,39 @@ This module serves as the "brain" of **myShell**. It is responsible for taking r
 [ ] Next Step: Implement logic to bypass fork() for built-in commands (cd, pwd, etc.).
 
 [ ] Next Step: Final synchronization and stress-testing with the Execution engine.
+
+#Built-in Commands of the shell
+- **Module Author:** shahd waleed bayoumy
+- **Student ID:** 23010091
+
+---
+
+## 1. Module Overview
+This module is responsible for implementing the Built-in Commands of the shell. Unlike external programs, these commands are executed directly within the shell process itself to modify its state or environment (such as changing the current directory). By handling these internally, we avoid the overhead of creating new processes for basic shell operations.
+
+---
+
+## 2. Functions Specifications
+1. shell_cd
+
+Description: Changes the current working directory of the shell.
+Implementation: It uses the chdir() system call to update the shell's execution path.
+Importance: This is a critical built-in because a child process created by fork() cannot change the directory of its parent process.
+
+2. shell_pwd
+
+Description: Prints the absolute path of the current working directory.
+Implementation: It utilizes the getcwd() function to retrieve and display the current path.
+Importance: Provides users with their current location within the file system hierarchy.
+
+3. shell_exit
+
+Description: Terminates the shell session safely.
+Implementation: Calls the exit() function to close the program and return control to the operating system.
+Importance: Provides a formal and clean way for the user to close the shell.
+
+4. execute_builtin
+
+Description: A dispatcher function that checks if the entered command is a built-in or an external one.
+Implementation: Compares the user input with the list of supported built-ins (cd, pwd, exit) before attempting to fork() for external commands.
+Importance: Ensures that internal commands are prioritized and executed without using exec() family functions.
