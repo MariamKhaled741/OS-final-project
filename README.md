@@ -54,7 +54,6 @@ This module handles all error conditions in the shell including:
 # Module: Command Line Parser
 **Author:** Mariam Khaled  
 **Student ID:** 23011528  
-**Course:** Operating Systems - Spring 2026
 
 ---
 
@@ -81,48 +80,7 @@ This module serves as the "brain" of **myShell**. It is responsible for taking r
 
 ---
 
-## 4. Technical Implementation
-The core of the module relies on a custom `struct`:
 
-```c
-struct Command {
-    char **args;         
-    char *input_file;     
-    char *output_file;    
-    int background;       
-    struct Command *next; 
-};
-## 4. Technical Implementation
-The main loop utilizes the parser by converting user input into a command list, passing it to the execution module, and ensuring memory is cleared afterward:
-
-```c
-// Example of how the main loop utilizes the parser
-struct Command *cmd_list = parse_pipes(user_input);
-
-if (cmd_list && cmd_list->args[0]) {
-    /* * The cmd_list is passed to the Execution Module.
-     * Example: execute_pipeline(cmd_list); 
-     */
-}
-
-// Memory cleanup after execution to prevent leaks
-free_command_list(cmd_list);
-
-## 4. Technical Implementation
-The main loop utilizes the parser by converting user input into a command list, passing it to the execution module, and ensuring memory is cleared afterward:
-
-```c
-
-struct Command *cmd_list = parse_pipes(user_input);
-
-if (cmd_list && cmd_list->args[0]) {
-    /* * The cmd_list is passed to the Execution Module.
-     * Example: execute_pipeline(cmd_list); 
-     */
-}
-
-
-free_command_list(cmd_list);
 5. Development Roadmap
 [x] Tokenization: Successful splitting of strings into individual tokens.
 
@@ -133,7 +91,3 @@ free_command_list(cmd_list);
 [ ] Next Step: Implement logic to bypass fork() for built-in commands (cd, pwd, etc.).
 
 [ ] Next Step: Final synchronization and stress-testing with the Execution engine.
-
-
-
->>>>>>> origin/master
