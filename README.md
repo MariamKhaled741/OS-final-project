@@ -95,7 +95,7 @@ This module serves as the "brain" of **myShell**. It is responsible for taking r
 ---
 
 # Module: Built-in Commands of the shell
-- **Module Author:** shahd waleed bayoumy
+- **Module Author:** Shahd Waleed Bayoumy
 - **Student ID:** 23010091
 
 ---
