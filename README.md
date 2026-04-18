@@ -41,7 +41,7 @@ This module handles all error conditions in the shell including:
 'handle_cd_error()' -> handles cd command errors
 'handle_command_not_found()' -> handles unknown commands
 
-##error codes
+## error codes
 - 0: success
 - 1: fork failed
 - 2: exec failed
@@ -92,7 +92,9 @@ This module serves as the "brain" of **myShell**. It is responsible for taking r
 
 [ ] Next Step: Final synchronization and stress-testing with the Execution engine.
 
-#Built-in Commands of the shell
+---
+
+## Built-in Commands of the shell
 - **Module Author:** shahd waleed bayoumy
 - **Student ID:** 23010091
 
