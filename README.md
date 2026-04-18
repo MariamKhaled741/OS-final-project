@@ -51,18 +51,6 @@ This module handles all error conditions in the shell including:
 - 6: directory not found
 - 127: command not found
 
-## usage Examples
-
-```c
-#include "error_handler.h"
-
-pid_t pid = fork();
-if (pid < 0){
-	handle_fork_error();
-}
-
-` ``` `
-
 # Module: Command Line Parser
 **Author:** Mariam Khaled  
 **Student ID:** 23011528  
