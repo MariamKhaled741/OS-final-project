@@ -22,7 +22,7 @@
 - **Team Number:** TEAMXX
 - **Roles:** 
 
-#Error Handler Module for myShell
+### Error Handler Module for myShell
 - **Module Author:** Maryam Hafez Saed
 - **Student ID:** 23011150
 ## Module Description 
@@ -52,8 +52,8 @@ This module handles all error conditions in the shell including:
 - 127: command not found
 
 # Module: Command Line Parser
-**Author:** Mariam Khaled  
-**Student ID:** 23011528  
+- **Author:** Mariam Khaled  
+- **Student ID:** 23011528  
 
 ---
 
@@ -94,7 +94,7 @@ This module serves as the "brain" of **myShell**. It is responsible for taking r
 
 ---
 
-## Built-in Commands of the shell
+### Built-in Commands of the shell
 - **Module Author:** shahd waleed bayoumy
 - **Student ID:** 23010091
 
