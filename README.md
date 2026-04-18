@@ -1,8 +1,9 @@
-<<<<<<< HEAD
+<<<<<< HEAD
 # TEAMX Shell Project
 ## Alexandria University - Faculty of Computers and Data Science
 
 ### Team Members:
+<<<<<<< HEAD
 1. Mariam Khaled Ahmed 		23011528
 2. Mariam Hafez Saed		23011150
 3. Sondos Yasser Mohammed	23010132
@@ -14,6 +15,18 @@
 9. Rania Ali Abo Zaid		23010113
 10. Shahd Waleed Bayoumy	XXXXXXXX
 
+=======
+1. Mariam Khaled
+2. Mariam Hafez Saed
+3. Sondos Yasser Mohammed
+4. Sohier Mohammed Salah
+5. Mariam Farag Mohammed 
+6. Asmaa Abdallah Mosa 
+7. Salma Essam Ismail 
+8. Basmala Mahmoud 
+9. Rania Ali 
+10. Shahd Waleed Bayoumy 
+>>>>>>> 0c9cdac666efa793993d7ba07255cbf235e9c11d
 
 ### How to run:
 1. Open Terminal in this folder.
