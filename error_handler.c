@@ -30,6 +30,9 @@ void print_error(int error_code, const char *details){
 		case ERR_MEMORY:
                 fprintf(stderr, "myShell: %s: memory allocation failed\n", details);
                 break;
+                case ERR_INVALID_INPUT:
+                fprintf(stderr, "myShell: %s: invalid syntax\n", details);
+                break;
 		default:
 		fprintf(stderr, "myshell: unknown error\n");
 }

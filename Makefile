@@ -1,5 +1,16 @@
-all:
-	gcc myShell.c -o myShell
+CC = gcc
+CFLAGS = -Wall -g
+
+all: myShell
+
+myShell: myShell.o error_handler.o
+	$(CC) $(CFLAGS) -o myShell myShell.o error_handler.o
+
+myShell.o: myShell.c error_handler.h
+	$(CC) $(CFLAGS) -c myShell.c
+
+error_handler.o: error_handler.c error_handler.h
+	$(CC) $(CFLAGS) -c error_handler.c
 
 clean:
-	rm -f myShell
+	rm -f *.o myShell
