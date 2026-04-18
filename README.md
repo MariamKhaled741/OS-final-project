@@ -1,9 +1,7 @@
-<<<<<< HEAD
 # TEAMX Shell Project
 ## Alexandria University - Faculty of Computers and Data Science
 
 ### Team Members:
-<<<<<<< HEAD
 1. Mariam Khaled Ahmed 		        23011528
 2. Mariam Hafez Saed		        23011150
 3. Sondos Yasser Mohammed	        23010132
@@ -61,7 +59,7 @@ pid_t pid = fork();
 if (pid < 0){
 	handle_fork_error();
 }
-
+` ``` `
 # Module: Command Line Parser
 **Author:** Mariam Khaled  
 **Student ID:** 23011528  
