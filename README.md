@@ -22,7 +22,7 @@
 - **Team Number:** TEAMXX
 - **Roles:** 
 
-# Error Handler Module for myShell
+# Module: Error Handler Module for myShell:
 - **Module Author:** Maryam Hafez Saed
 - **Student ID:** 23011150
 ## Module Description 
@@ -51,7 +51,7 @@ This module handles all error conditions in the shell including:
 - 6: directory not found
 - 127: command not found
 
-# Module: Command Line Parser
+# Module: Command Line Parser:
 - **Author:** Mariam Khaled  
 - **Student ID:** 23011528  
 
@@ -94,7 +94,7 @@ This module serves as the "brain" of **myShell**. It is responsible for taking r
 
 ---
 
-# Built-in Commands of the shell
+# Module: Built-in Commands of the shell:
 - **Module Author:** shahd waleed bayoumy
 - **Student ID:** 23010091
 
@@ -106,25 +106,25 @@ This module is responsible for implementing the Built-in Commands of the shell. 
 ---
 
 ## 2. Functions Specifications
-## 1. shell_cd
+### 1. shell_cd
 
 Description: Changes the current working directory of the shell.
 Implementation: It uses the chdir() system call to update the shell's execution path.
 Importance: This is a critical built-in because a child process created by fork() cannot change the directory of its parent process.
 
-## 2. shell_pwd
+### 2. shell_pwd
 
 Description: Prints the absolute path of the current working directory.
 Implementation: It utilizes the getcwd() function to retrieve and display the current path.
 Importance: Provides users with their current location within the file system hierarchy.
 
-## 3. shell_exit
+### 3. shell_exit
 
 Description: Terminates the shell session safely.
 Implementation: Calls the exit() function to close the program and return control to the operating system.
 Importance: Provides a formal and clean way for the user to close the shell.
 
-## 4. execute_builtin
+### 4. execute_builtin
 
 Description: A dispatcher function that checks if the entered command is a built-in or an external one.
 Implementation: Compares the user input with the list of supported built-ins (cd, pwd, exit) before attempting to fork() for external commands.
