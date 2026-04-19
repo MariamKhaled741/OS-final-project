@@ -1,16 +1,20 @@
 CC = gcc
+
 CFLAGS = -Wall -g
 
-all: myShell
 
-myShell: myShell.o error_handler.o
-	$(CC) $(CFLAGS) -o myShell myShell.o error_handler.o
+SRCS = myShell.c execution.c builtins.c error_handler.c
 
-myShell.o: myShell.c error_handler.h
-	$(CC) $(CFLAGS) -c myShell.c
+OBJS = $(SRCS:.c=.o)
 
-error_handler.o: error_handler.c error_handler.h
-	$(CC) $(CFLAGS) -c error_handler.c
+myShell: $(OBJS)
+
+	$(CC) $(CFLAGS) -o myShell $(OBJS)
+
+%.o: %.c
+
+	$(CC) $(CFLAGS) -c $<
 
 clean:
+
 	rm -f *.o myShell

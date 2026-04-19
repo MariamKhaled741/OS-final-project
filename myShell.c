@@ -2,17 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include "error_handler.h"
+#include "execution.h"
 
 #define MAX_ARGS 64
 #define MAX_LINE 1024
-
-struct Command {
-    char **args;
-    char *input_file;
-    char *output_file;
-    int background;
-    struct Command *next;
-};
 
 void free_command_list(struct Command *head) {
     while (head != NULL) {
@@ -91,17 +84,10 @@ while (1) {
 
         struct Command *cmd_list = parse_pipes(line);
         
-        struct Command *curr = cmd_list;
-        int p_idx = 0;
-        while (curr != NULL) {
-            printf("--- Command [%d] ---\n", p_idx++);
-            printf("Exec: %s\n", curr->args[0] ? curr->args[0] : "NONE");
-            if (curr->input_file) printf("In: %s\n", curr->input_file);
-            if (curr->output_file) printf("Out: %s\n", curr->output_file);
-            curr = curr->next;
+        if (cmd_list) {
+            execute_pipeline(cmd_list);
+            free_command_list(cmd_list);
         }
-        printf("------------------\n");
-        free_command_list(cmd_list);
     }
 
     return 0;
