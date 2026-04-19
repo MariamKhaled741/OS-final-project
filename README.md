@@ -146,3 +146,28 @@ I implemented the core execution layer (execution.c and execution.h):
 Responsible for fork() and execvp() to run external commands.
 Integrated built-in commands without using fork() (calls execute_builtin()).
 Set up the global fg_pid for SIGINT (Ctrl+C) handling.
+
+# Module: Pipeline Implementation
+
+- **Module Author:** Sondos Yasser
+- **Student ID:** 23010132
+
+## 1. Module Overview
+This module is responsible for the creation and management of inter-process communication (IPC) using Unix pipes. It allows the output of one command to serve as the input for the next, supporting complex command chains.
+
+## 2. Core Functions & Implementation
+implementing the pipeline logic in execution.c, focusing on these core functions:
+    
+    void execute_pipeline(struct Command *cmd_list):
+        Logic: Iterates through a linked list of commands. For each command (except the last), it creates a pipe using pipe().
+        Process Management: It uses fork() for every command in the pipeline to ensure parallel execution.
+        I/O Linking: Inside the child process, it uses dup2() to redirect STDOUT to the "write end" of the current pipe and STDIN to the "read end" of the previous pipe.
+
+## 3. Integration & Robustness
+    With Redirection: The implementation is designed to honor file redirection even within pipes. For example, in cat < file.txt | grep "search", the first process correctly redirects its input from a file before passing data to the pipe.
+    
+	With Error Handling:
+        It monitors pipe() and fork() system calls; if any fails, it invokes the error_handler to prevent shell crashes.
+        It ensures all unused pipe file descriptors are closed in both parent and child processes to avoid resource leaks and "hanging" processes (zombies).
+
+    Execution Flow: By managing file descriptors carefully, it ensures that commands like ls | grep .c | wc -l execute seamlessly, passing data through the kernel buffer without manual intervention.
