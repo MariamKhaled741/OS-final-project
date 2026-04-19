@@ -129,3 +129,20 @@ Importance: Provides a formal and clean way for the user to close the shell.
 Description: A dispatcher function that checks if the entered command is a built-in or an external one.
 Implementation: Compares the user input with the list of supported built-ins (cd, pwd, exit) before attempting to fork() for external commands.
 Importance: Ensures that internal commands are prioritized and executed without using exec() family functions.
+
+---
+
+# Module: Execution (fork ,exec)
+- **Module Author:** Basmala Mahmoud Elsayed 
+- **Student ID:** 23010140
+
+---
+## 1. Module Overview
+Execution Engine: Core execution using fork() + execvp() + waitpid()
+
+## 2. My Contribution
+I implemented the core execution layer (execution.c and execution.h):
+
+Responsible for fork() and execvp() to run external commands.
+Integrated built-in commands without using fork() (calls execute_builtin()).
+Set up the global fg_pid for SIGINT (Ctrl+C) handling.
