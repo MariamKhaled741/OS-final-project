@@ -137,14 +137,28 @@ Importance: Ensures that internal commands are prioritized and executed without 
 
 ---
 ## 1. Module Overview
-Execution Engine: Core execution using fork() + execvp() + waitpid()
+This module is the core execution engine of myShell. It is responsible for creating child processes and executing external commands using the fork() and exec() family of system calls. 
 
-## 2. My Contribution
-I implemented the core execution layer (execution.c and execution.h):
+The module receives the parsed command structure from the Parser module and safely decides whether to execute a built-in command (via the Built-in Commands module) or launch an external program. It uses only fork(), execvp(), and waitpid() for process management and fully integrates with the Error Handler module for all failures.
 
-Responsible for fork() and execvp() to run external commands.
-Integrated built-in commands without using fork() (calls execute_builtin()).
-Set up the global fg_pid for SIGINT (Ctrl+C) handling.
+## 2. Key Features
+• Process creation using fork()
+• External command execution using execvp()
+• Proper parent-child synchronization with waitpid()
+• Built-in command bypass (no fork() for cd, pwd, exit)
+• Full error propagation using the Error Handler module
+• Memory safety and resource cleanup
+
+## 3. Function Documentation
+Main Function:
+• execute_pipeline(Command* cmd_list)
+  Description: The central function called from the main shell loop after parsing. It handles the complete execution lifecycle of any command.
+  Implementation: 
+    - Checks if the command is a built-in and calls execute_builtin() if so
+    - For external commands: forks a child process
+    - In the child: calls execvp() with the parsed arguments
+    - In the parent: waits for the child using waitpid()
+    - Propagates all errors through the Error Handler module
 
 # Module: Pipeline Implementation
 
