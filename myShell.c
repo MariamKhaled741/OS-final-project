@@ -3,62 +3,12 @@
 #include <string.h>
 #include "error_handler.h"
 #include "execution.h"
+#include "builtins.h"  
 
-#define MAX_ARGS 64
 #define MAX_LINE 1024
-#define MAX_HISTORY 100
+#define MAX_ARGS 64
 
-char history_list[MAX_HISTORY][MAX_LINE];
-int history_count = 0;
 
-void add_to_history(char *input) {
-    if (history_count < MAX_HISTORY) {
-        strcpy(history_list[history_count], input);
-        history_count++;
-    } else {
-        for (int i = 0; i < MAX_HISTORY - 1; i++) {
-            strcpy(history_list[i], history_list[i + 1]);
-        }
-        strcpy(history_list[MAX_HISTORY - 1], input);
-    }
-}
-
-void show_history() {
-    for (int i = 0; i < history_count; i++) {
-        printf("%d  %s\n", i + 1, history_list[i]);
-    }
-}
-void free_command_list(struct Command *head) {
-    while (head != NULL) {
-        struct Command *temp = head;
-        head = head->next;
-        free(temp->args);
-        free(temp);
-    }
-}
-#include <unistd.h> 
-
-int execute_builtin(char **args) {
-    if (args[0] == NULL) return 0;
-    if (strcmp(args[0], "history") == 0) {
-        show_history(); 
-        return 1; 
-    }
-
-    if (strcmp(args[0], "cd") == 0) {
-        if (args[1]) {
-            if (chdir(args[1]) != 0) {
-                perror("myShell"); 
-            }
-        }
-        return 1;
-    }
-    if (strcmp(args[0], "exit") == 0) {
-        exit(0);
-    }
-
-    return 0; 
-}
 struct Command* parse_single_command(char *line) {
     struct Command *cmd = malloc(sizeof(struct Command));
     if (cmd == NULL) {
@@ -75,7 +25,7 @@ struct Command* parse_single_command(char *line) {
     char *token = strtok(line, " \t\n");
     int i = 0;
 
-    while (token != NULL) {
+    while (token != NULL && i < MAX_ARGS - 1) {
         if (strcmp(token, "&") == 0) {
             cmd->background = 1;
         } else if (strcmp(token, "<") == 0) {
@@ -93,7 +43,7 @@ struct Command* parse_single_command(char *line) {
     return cmd;
 }
 
-//pipes
+
 struct Command* parse_pipes(char *line) {
     struct Command *head = NULL;
     struct Command *last = NULL;
@@ -113,22 +63,60 @@ struct Command* parse_pipes(char *line) {
     }
     return head;
 }
+
+
+void free_command_list(struct Command *head) {
+    while (head != NULL) {
+        struct Command *temp = head;
+        head = head->next;
+        if (temp->args) free(temp->args);
+        free(temp);
+    }
+}
+
+
 int main() {
     char line[MAX_LINE];
 
+
+    printf("Welcome to myShell!\n");
+
     while (1) {
+
         printf("myShell> "); 
-        if (!fgets(line, MAX_LINE, stdin)) break;
+        
+
+        if (!fgets(line, MAX_LINE, stdin)) {
+            printf("\nExiting myShell... Goodbye!\n");
+            break;
+        }
+
 
         line[strcspn(line, "\n")] = 0;
-        if (strlen(line) == 0) continue;
+        if (strlen(line) == 0) {
+            continue;
+        }
+
 
         add_to_history(line); 
-	struct Command *cmd_list = parse_pipes(line);
-	if (cmd_list) {
-	    execute_pipeline(cmd_list); 
-	    free_command_list(cmd_list);
-	}
+        
+
+        struct Command *cmd_list = parse_pipes(line);
+        
+
+        if (cmd_list && cmd_list->args && cmd_list->args[0]) {
+
+            if (!execute_builtin(cmd_list->args)) {
+             
+                execute_pipeline(cmd_list); 
+            }
+        }
+        
+
+        if (cmd_list) {
+            free_command_list(cmd_list);
+        }
     }
+
     return 0;
 }

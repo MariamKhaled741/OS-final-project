@@ -1,27 +1,26 @@
 # TEAMX Shell Project
 ## Alexandria University - Faculty of Computers and Data Science
 
-### Team Members:
-1. Mariam Khaled Ahmed 		        23011528
-2. Mariam Hafez Saed		        23011150
-3. Sondos Yasser Mohammed	        23010132
-4. Soheir Mohammed Salah	        23010158
-5. Mariam Farag Mohammed 	        23011531
-6. Asmaa Abdallah Mosa 		        23011043
-7. Salma Essam Ismail 		        23011286
-8. Basmala Mahmoud El-Sayed 		23010140
-9. Rania Ali Abo Zaid		        23010113
-10. Shahd Waleed Bayoumy	        23010091
+- **Team Number:** TEAMXX
+
+### Team Members and role:
+| Name                         | ID       | Role |
+|------------------------------|----------|------|
+| Mariam Khaled Ahmed         | 23011528 |      |
+| Mariam Hafez Saed           | 23011150 |      |
+| Sondos Yasser Mohammed      | 23010132 |      |
+| Soheir Mohammed Salah       | 23010158 |      |
+| Mariam Farag Mohammed       | 23011531 |      |
+| Asmaa Abdallah Mosa         | 23011043 |      |
+| Salma Essam Ismail          | 23011286 |      |
+| Basmala Mahmoud El-Sayed    | 23010140 |      |
+| Rania Ali Abo Zaid          | 23010113 |      |
+| Shahd Waleed Bayoumy        | 23010091 |      |
 
 ### How to run:
 1. Open Terminal in this folder.
 2. Type `make`.
 3. Run using `./myShell`.
-
-## Team Information
-- **Team Number:** TEAMXX
-- **Roles:** 
-
 # Module: Error Handler Module for myShell
 - **Module Author:** Maryam Hafez Saed
 - **Student ID:** 23011150
@@ -171,3 +170,31 @@ implementing the pipeline logic in execution.c, focusing on these core functions
         It ensures all unused pipe file descriptors are closed in both parent and child processes to avoid resource leaks and "hanging" processes (zombies).
 
     Execution Flow: By managing file descriptors carefully, it ensures that commands like ls | grep .c | wc -l execute seamlessly, passing data through the kernel buffer without manual intervention.
+
+### **Module: Shell Loop and Prompt (The REPL Engine)**
+
+**Module Author:** Mariam Farag Mohammed 
+**Student ID:** 23011531 
+**Module Description:** 
+This module serves as the primary interface and the central control loop of **myShell**. It implements the **REPL** (Read-Eval-Print Loop) pattern, coordinating the lifecycle of a command from user input to execution and memory cleanup.
+
+**Key Responsibilities:**
+-   **Interactive Prompt:** Displaying a persistent command-line interface.
+-   **Input Management:** Capturing raw user input and handling End-of-File (EOF) signals.
+-   **Pre-processing:** Cleaning input strings and filtering empty commands.
+-   **Orchestration:** Sequencing the calls between the History, Parser, and Execution modules
+-   **Memory Management:** Ensuring command structures are freed after each execution cycle to prevent memory leaks
+**Functions:**
+-   `main()` -> The entry point that hosts the infinite `while(1)` loop.
+-   `fgets()` (Internal) -> Used for secure input reading to prevent buffer overflows
+-   `strcspn()` (Internal) -> Used to sanitize the input by removing trailing newline characters.
+-   `fflush(stdout)` -> Ensures the prompt is immediately visible on the terminal.
+**Workflow Logic:**
+1.  **READ:** Display `myShell>` and wait for user input.
+2.  **VALIDATE:** Check if the input is `NULL` (Ctrl+D) or empty.
+3.  **LOG:** Send the raw string to `add_to_history()`.
+4.  **PARSE:** Call `parse_pipes()` to transform the string into a `Command` linked list.
+5.  **DISPATCH:** * Check `execute_builtin()` first.
+    -   If not a built-in, call `execute_pipeline()`.
+6.  **CLEANUP:** Call `free_command_list()` to deallocate memory before the next prompt.
+

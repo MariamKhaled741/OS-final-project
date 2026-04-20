@@ -1,28 +1,23 @@
-# Compiler to use
 CC = gcc
-
-# Compiler flags: -Wall for all warnings, -g for debugging info
 CFLAGS = -Wall -g
-
-# Source files:
-# Note: builtins.c is excluded for now to avoid 'multiple definition' 
-# errors since functions are also defined in myShell.c
-SRCS = myShell.c execution.c error_handler.c 
-
-# Object files (automatically derived from SRCS)
-OBJS = $(SRCS:.c=.o)
-
-# Name of the final executable
+OBJS = myShell.o execution.o error_handler.o builtins.o
 TARGET = myShell
 
-# Default rule to build the target
+# ده السطر اللي كان متكرر، خليه مرة واحدة بس في أول الملف
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
 
-# Rule to compile .c files into .o files
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+myShell.o: myShell.c execution.h error_handler.h builtins.h
+	$(CC) $(CFLAGS) -c myShell.c
 
-# Rule to clean up build files
+execution.o: execution.c execution.h error_handler.h builtins.h
+	$(CC) $(CFLAGS) -c execution.c
+
+builtins.o: builtins.c builtins.h
+	$(CC) $(CFLAGS) -c builtins.c
+
+error_handler.o: error_handler.c error_handler.h
+	$(CC) $(CFLAGS) -c error_handler.c
+
 clean:
 	rm -f *.o $(TARGET)
