@@ -126,8 +126,22 @@ void execute_pipeline(struct Command *cmd_list) {
              * execution logic (&) and job control here.
              * Currently, the shell waits for each command by default.
              */
-            waitpid(pid, NULL, 0); 
-            fg_pid = 0;
+           /* ===================================================== */
+             /*  BACKGROUND PROCESS MANAGEMENT (&)             */
+       /* ===================================================== */
+     if (current->background == 1) {
+    /* If the command ends with '&', do not wait for the child process */
+    /* Print the child's process ID as per project requirements  */
+          printf("[Process ID: %d]\n", pid); 
+    
+    /* We do not call waitpid() here so the shell can immediately */
+    /* return to the prompt for the next user input  */
+      } else {
+    /* Standard foreground execution: the shell must wait  */
+          waitpid(pid, NULL, 0); 
+          fg_pid = 0; // Reset foreground PID once the process finishes
+       }
+
 
         } else {
             /* Forking failed (e.g., system out of resources) */
