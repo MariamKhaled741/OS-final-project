@@ -1,14 +1,16 @@
 CC = gcc
 CFLAGS = -Wall -g
-OBJS = myShell.o execution.o error_handler.o builtins.o
+OBJS = myShell.o execution.o error_handler.o builtins.o signals.o
 TARGET = myShell
 
-# ده السطر اللي كان متكرر، خليه مرة واحدة بس في أول الملف
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
 
-myShell.o: myShell.c execution.h error_handler.h builtins.h
+myShell.o: myShell.c execution.h error_handler.h builtins.h signals.h
 	$(CC) $(CFLAGS) -c myShell.c
+
+signals.o: signals.c signals.h
+	$(CC) $(CFLAGS) -c signals.c
 
 execution.o: execution.c execution.h error_handler.h builtins.h
 	$(CC) $(CFLAGS) -c execution.c

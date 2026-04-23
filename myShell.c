@@ -1,3 +1,4 @@
+#include "signals.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -76,6 +77,7 @@ void free_command_list(struct Command *head) {
 
 
 int main() {
+    setup_signals();
     char line[MAX_LINE];
 
 
