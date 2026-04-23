@@ -1,21 +1,21 @@
 # TEAMX Shell Project
 ## Alexandria University - Faculty of Computers and Data Science
 
-- **Team Number:** TEAMXX
+- **Team Number:** GN_4
 
 ### Team Members and role:
 | Name                         | ID       | Role |
 |------------------------------|----------|------|
-| Mariam Khaled Ahmed         | 23011528 |      |
-| Mariam Hafez Saed           | 23011150 |      |
-| Sondos Yasser Mohammed      | 23010132 |      |
-| Soheir Mohammed Salah       | 23010158 |      |
-| Mariam Farag Mohammed       | 23011531 |      |
-| Asmaa Abdallah Mosa         | 23011043 |      |
-| Salma Essam Ismail          | 23011286 |      |
-| Basmala Mahmoud El-Sayed    | 23010140 |      |
-| Rania Ali Abo Zaid          | 23010113 |      |
-| Shahd Waleed Bayoumy        | 23010091 |      |
+| Mariam Khaled Ahmed         | 23011528 |parser, integration, revision|
+| Mariam Hafez Saed           | 23011150 |error handling module|
+| Sondos Yasser Mohammed      | 23010132 |pipes|
+| Soheir Mohammed Salah       | 23010158 |redirection|
+| Mariam Farag Mohammed       | 23011531 |shell loop and prompt|
+| Asmaa Abdallah Mosa         | 23011043 |history feature|
+| Salma Essam Ismail          | 23011286 |signal handling|
+| Basmala Mahmoud El-Sayed    | 23010140 |execution (fork + exec)|
+| Rania Ali Abo Zaid          | 23010113 |background processes|
+| Shahd Waleed Bayoumy        | 23010091 |build ins (cd, pwd, exit)|
 
 ### How to run:
 1. Open Terminal in this folder.
@@ -51,7 +51,7 @@ This module handles all error conditions in the shell including:
 - 127: command not found
 
 # Module: Command Line Parser
-- **Author:** Mariam Khaled  
+- **Author:** Mariam Khaled Ahmed
 - **Student ID:** 23011528  
 
 ---
@@ -211,4 +211,101 @@ This module serves as the primary interface and the central control loop of **my
 5.  **DISPATCH:** * Check `execute_builtin()` first.
     -   If not a built-in, call `execute_pipeline()`.
 6.  **CLEANUP:** Call `free_command_list()` to deallocate memory before the next prompt.
+## History Feature Module
+- **Module Author:** Asmaa Abdallah Mosa
+- **Student ID:** 23011043
+### 1. Module Overview
+This module tracks user activity by storing previously entered commands in a dedicated data structure. It allows users to review their command history during the current session, improving the user experience and efficiency of the shell.
+
+### 2. Functions Specifications
+
+-   **add_to_history**:
+    
+    -   **Description**: Stores each command entered by the user into a circular buffer or a fixed-size array.
+        
+    -   **Implementation**: It copies the input string into the `history_list` and manages the `history_count`, ensuring it doesn't exceed the defined `MAX_HISTORY`.
+        
+-   **show_history**:
+    
+    -   **Description**: Displays the list of stored commands.
+        
+    -   **Importance**: Helps the user keep track of their previous actions within the session.
+        
+
+----------
+
+##  Process Management & Background Execution
+- **Module Author:** Rania Ali Abo Zaid
+- **Student ID:** 23010113
+### 1. Module Overview
+
+Responsible for managing how the shell handles child processes. It distinguishes between foreground processes (where the shell waits) and background processes (where the shell remains interactive).
+
+### 2. Functions Specifications
+
+-   **Background Execution (`&`)**:
+    
+    -   **Description**: Allows commands to run in the background.
+        
+    -   **Implementation**: When the `&` symbol is detected, the shell forks a child process but the parent does **not** call `waitpid()`.
+        
+    -   **Importance**: Enables multitasking by allowing the user to continue entering commands while a long-running task executes.
+        
+    -   **PID Reporting**: Per requirements, the shell prints the Process ID (PID) of the background job immediately after starting it.
+        
+
+----------
+
+##  Input/Output Redirection
+- **Module Author:** Sohier Mohammed Salah
+- **Student ID:** 23010158
+### 1. Module Overview
+
+This module enables the shell to redirect standard input (`STDIN`) and standard output (`STDOUT`) to/from files instead of the terminal.
+
+### 2. Functions Specifications
+
+-   **Output Redirection (`>`)**:
+    
+    -   **Description**: Redirects command output to a file.
+        
+    -   **Implementation**: Uses `open()` with `O_CREAT` and `O_TRUNC` flags, followed by `dup2()` to replace `STDOUT_FILENO`.
+        
+-   **Input Redirection (`<`)**:
+    
+    -   **Description**: Reads input for a command from a file.
+        
+    -   **Implementation**: Uses `open()` in `O_RDONLY` mode and `dup2()` to replace `STDIN_FILENO`.
+        
+    -   **Importance**: Essential for automating tasks and processing data stored in files.
+        
+
+----------
+
+## Signal Handling
+- **Module Author:** Salma Essam Ismail
+- **Student ID:** 23011286
+
+### 1. Module Overview
+
+This module defines how the shell reacts to external signals sent by the user via the keyboard, ensuring the shell remains stable and doesn't terminate unexpectedly.
+
+### 2. Functions Specifications
+
+-   **handle_sigint (Ctrl+C)**:
+    
+    -   **Description**: Custom handler for the `SIGINT` signal.
+        
+    -   **Implementation**: If a foreground process is running (tracked via `fg_pid`), the signal is forwarded to that process using `kill()`. If the shell is idle, it simply prints a new prompt.
+        
+    -   **Importance**: Protects the main shell process from being killed by `Ctrl+C`, satisfying the project requirement that only the child process should terminate.
+        
+-   **setup_signals**:
+    
+    -   **Description**: Initializes the signal handlers at shell startup.
+        
+    -   **Implementation**: Uses the `signal()` system call to map `SIGINT` to the custom handler and `SIG_IGN` for `SIGTSTP`.
+
+
+
 
